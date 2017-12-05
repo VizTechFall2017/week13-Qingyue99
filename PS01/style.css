@@ -1,0 +1,17 @@
+.svgBox{
+    width:90vw;
+    height:500px;
+    margin:50px;
+    align-content: center;
+
+}
+
+
+.graph-svg-component {
+    background-color: rgba(234,246,246,0.8);
+}
+
+.shadow{
+            overflow: visible;
+
+}
