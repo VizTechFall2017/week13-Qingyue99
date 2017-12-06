@@ -16,7 +16,11 @@ function sd(s){
 
 
 $(document).ready(function(){
-    $('#fullpage').fullpage();
+    $('#fullpage').fullpage({
+            anchors:['One', 'Two', 'Three','Four', 'Five','Six']
+        });
+
+
     $('circle',document).each(function(){
         $(this).mouseenter(function(){
             if($(this).css('fill')=='rgb(88, 89, 91)'){ $(this).css('fill', '#fff'); }
