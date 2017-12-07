@@ -1,8 +1,8 @@
 var margin = {top:0, right: 70, bottom: 80, left: 10},
-    outerWidth = 1000,
-    outerHeight = 300,
-    width1 = 1000 - margin.left - margin.right,
-    height1 = 300;// - margin.top - margin.bottom;
+    outerWidth = 2000,
+    outerHeight = 600,
+    width1 = 2000 - margin.left - margin.right,
+    height1 = 600;// - margin.top - margin.bottom;
 
 var x = d3.scaleLinear()
     .range([ 0, width1 ]).nice();
@@ -54,8 +54,8 @@ d3.csv("bcc.csv", function(data){
         });
 
     var zoomBeh = d3.zoom()
-        //.x(x)
-        //y(y)
+        // .x(x)
+        // .y(y)
         .scaleExtent([0.5, 1])
         .on("zoom", zoomed);
 
@@ -77,8 +77,9 @@ d3.csv("bcc.csv", function(data){
     var gX=svg.append("g")
         .classed("x axis", true)
         .attr("transform", "translate(0," + height1+ ")")
-        .call(xAxis)
-        .append("text")
+        .call(xAxis);
+
+    gX.append("text")
         .classed("label", true)
         .attr("x", width1)
         .attr("y", margin.bottom - 10)
@@ -87,8 +88,9 @@ d3.csv("bcc.csv", function(data){
 
     var gY=svg.append("g")
         .classed("y axis", true)
-        .call(yAxis)
-        .append("text")
+        .call(yAxis);
+
+    gY.append("text")
         .classed("label", true)
         .attr("transform", "rotate(-90)")
         .attr("y", -margin.left-20)
@@ -134,9 +136,16 @@ d3.csv("bcc.csv", function(data){
         .on("mouseout", tip.hide);
 
         function zoomed() {
-            view.attr("transform", d3.event.transform);
+            // view.attr("transform", d3.event.transform);
             gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
             gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+
+            var new_y = d3.event.transform.rescaleY(y);
+            var new_x = d3.event.transform.rescaleY(x);
+            objects.selectAll(".dot")
+                .attr("transform", function(d){
+                    return "translate(" + new_x(d[xValue]) + "," + new_y(d[yValue]) + ")";
+                }); //transform
         }
 
     function transform(d) {
